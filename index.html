@@ -47,51 +47,54 @@
       cursor: pointer;
       border-radius: 0 6px 6px 0;
     }
-    .movie-list {
-      display: grid;
-      grid-template-columns: 250px 1fr;
-      gap: 20px;
-      margin-bottom: 40px;
+    .movie-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      justify-content: center;
+    }
+    .movie-card {
+      background: #1e1e1e;
+      border-radius: 12px;
+      width: 220px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .movie-card:hover {
+      transform: scale(1.05);
     }
     .movie-poster {
       width: 100%;
-      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.3s;
-    }
-    .movie-poster:hover {
-      transform: scale(1.05);
+      display: block;
     }
     .movie-info {
       display: none;
-      background: #1e1e1e;
-      padding: 20px;
-      border-radius: 12px;
-      animation: fadeIn 0.5s ease-in-out;
+      padding: 15px;
     }
     .movie-info h2 {
       color: #00ffd5;
+      font-size: 18px;
+      margin-bottom: 8px;
     }
     .movie-info p {
-      margin: 10px 0;
+      font-size: 13px;
+      margin: 5px 0;
     }
     .download-btn {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 10px 15px;
       background: #f39c12;
       color: black;
       font-weight: bold;
-      border-radius: 8px;
+      border-radius: 6px;
       text-decoration: none;
-      margin-top: 15px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+      margin-top: 10px;
+      font-size: 13px;
     }
     @media (max-width: 768px) {
-      .movie-list {
-        grid-template-columns: 1fr;
+      .movie-card {
+        width: 100%;
       }
     }
   </style>
@@ -106,7 +109,7 @@
     <button onclick="searchMovie()">Search</button>
   </div>
 
-  <div id="moviesContainer"></div>
+  <div id="moviesContainer" class="movie-grid"></div>
 
   <script>
     const movies = [
@@ -117,7 +120,7 @@
         duration: "2h 6min",
         description: "Tony Stark builds a high-tech suit to fight evil after being captured in Afghanistan.",
         size: "1.2 GB",
-        poster: "https://https://khansahaalam521.github.io/Movie-Theatar/
+        poster: "posters/ironman.jpg",
         downloadLink: "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_1"
       },
       {
@@ -127,7 +130,7 @@
         duration: "3h 1min",
         description: "The Avengers assemble to reverse Thanos' actions and restore balance.",
         size: "2.8 GB",
-        poster: "https://i.ibb.co/GFrfpgv/endgame.jpg",
+        poster: "posters/endgame.jpg",
         downloadLink: "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_2"
       },
       {
@@ -137,7 +140,7 @@
         duration: "2h 28min",
         description: "A skilled thief uses dream-sharing technology to perform corporate espionage.",
         size: "2.0 GB",
-        poster: "https://i.ibb.co/qjyNyt9/inception.jpg",
+        poster: "posters/inception.jpg",
         downloadLink: "https://drive.google.com/uc?export=download&id=YOUR_FILE_ID_3"
       }
     ];
@@ -156,15 +159,15 @@
 
       filtered.forEach((movie, index) => {
         container.innerHTML += `
-          <div class="movie-list">
+          <div class="movie-card">
             <img src="${movie.poster}" alt="${movie.title}" class="movie-poster" onclick="toggleDetails(${index})">
             <div class="movie-info" id="movie-${index}">
               <h2>${movie.title} (${movie.year})</h2>
-              <p><strong>⭐ Rating:</strong> ${movie.rating}</p>
-              <p><strong>🕐 Duration:</strong> ${movie.duration}</p>
-              <p><strong>📦 Size:</strong> ${movie.size}</p>
-              <p><strong>📖 Description:</strong> ${movie.description}</p>
-              <a href="${movie.downloadLink}" target="_blank" class="download-btn">⬇ Download Movie</a>
+              <p><strong>⭐</strong> ${movie.rating}</p>
+              <p><strong>🕐</strong> ${movie.duration}</p>
+              <p><strong>📦</strong> ${movie.size}</p>
+              <p>${movie.description}</p>
+              <a href="${movie.downloadLink}" target="_blank" class="download-btn">⬇ Download</a>
             </div>
           </div>
         `;
